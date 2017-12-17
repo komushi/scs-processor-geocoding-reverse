@@ -114,14 +114,14 @@ brew services start mongodb
 brew services start rabbitmq
 ```
 
-### 1-2-3. Start http-source-rabbit
+### 1-2-3. Start scs-source-http
 ```
-java -jar http-source-rabbit-1.0.2.RELEASE.jar --server.port=9000 --spring.cloud.stream.bindings.output.destination=http2tuple
+java -jar scs-processor-http-1.0.0-RELEASE.jar
 ```
 
 ### 1-2-4. Start scs-processor-geocoding-reverse
 ```
-java -jar target/scs-processor-geocoding-reverse-0.2.0-SNAPSHOT.jar --server.port=9090 --spring.cloud.stream.bindings.input.destination=http2tuple --spring.cloud.stream.bindings.output.contentType=application/json --spring.cloud.stream.bindings.output.destination=tuple2gem --properties.mongo.database=geojson --properties.mongo.collection=blocks --properties.mongo.user=root --properties.mongo.password=keepitsimple
+java -jar target/scs-processor-geocoding-reverse-1.0.0-RELEASE.jar
 ```
 
 ### 1-2-5. Post a message
@@ -220,29 +220,22 @@ mvn docker:push -Ddocker.username=[provide your username] -Ddocker.password=[pro
 
 Since we use docker container here and the Spring Cloud Stream App deault port is 8080 so the --server.port(the container port) parameter does not need to be specified for docker deployment.
 
-### 2-4-1. Entry Point Shell Mode
-
-```
-docker run -e SCS_OPTS='<app_args>' -p <host_port>:<container_port> komushi/scs-processor-geocoding-reverse
-```
-
-### 2-4-2. Entry Point Exec Mode
-
 ```
 docker run -p <host_port>:<container_port> komushi/scs-processor-geocoding-reverse <app_args>
 ```
 
-## 2-5. Test with HTTP Source
+## 2-5. Docker Run Test
 
-### 2-5-1. Start docker containers
-
-```
-docker run -p 9000:8080 springcloudstream/http-source-rabbit --spring.cloud.stream.bindings.output.destination=http_raw --spring.rabbitmq.host=192.168.11.111 --spring.rabbitmq.port=5672 --spring.rabbitmq.username=test --spring.rabbitmq.password=test
-```
+### 2-5-1. Test with RabbitMQ
 
 ```
-docker run komushi/scs-processor-geocoding-reverse --spring.cloud.stream.bindings.input.destination=http_raw --spring.cloud.stream.bindings.input.group=transform_geotuple --spring.cloud.stream.bindings.output.contentType=application/json --spring.cloud.stream.bindings.output.destination=transform_geotuple --properties.mongo.hostName=192.168.11.111 --properties.mongo.port=27017 --properties.mongo.database=geojson --properties.mongo.collection=blocks --properties.mongo.user=root --properties.mongo.password=keepitsimple --spring.rabbitmq.host=192.168.11.111 --spring.rabbitmq.port=5672 --spring.rabbitmq.username=test --spring.rabbitmq.password=test
+docker run -p 9000:9000 komushi/scs-source-http:1.0.0.RELEASE --spring.rabbitmq.host=docker.for.mac.localhost --spring.rabbitmq.port=5672 --spring.rabbitmq.username=guest --spring.rabbitmq.password=guest --spring.cloud.stream.defaultBinder=rabbit
 ```
+
+```
+docker run komushi/scs-processor-geocoding-reverse:1.0.0.RELEASE --spring.rabbitmq.host=docker.for.mac.localhost --spring.rabbitmq.port=5672 --spring.rabbitmq.username=guest --spring.rabbitmq.password=guest --spring.cloud.stream.defaultBinder=rabbit
+```
+
 
 ### 2-5-2. Post a message
 

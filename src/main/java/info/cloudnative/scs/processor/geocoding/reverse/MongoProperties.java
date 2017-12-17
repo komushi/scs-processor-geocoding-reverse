@@ -1,4 +1,4 @@
-package io.pivotal.spring.cloud.stream.processor.geocoding;
+package info.cloudnative.scs.processor.geocoding.reverse;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,4 +1,4 @@
-package io.pivotal.spring.cloud.stream.processor.geocoding;
+package info.cloudnative.scs.processor.geocoding.reverse;
 
 import com.fasterxml.jackson.databind.deser.Deserializers;
 import com.mongodb.Mongo;
@@ -25,7 +25,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.MongoOperations;
 
-import io.pivotal.spring.cloud.stream.processor.geocoding.model.Block;
+import info.cloudnative.scs.processor.geocoding.reverse.model.Block;
 
 /**
  * Created by lei_xu on 7/28/16.

@@ -1,4 +1,4 @@
-package io.pivotal.spring.cloud.stream.processor.geocoding;
+package info.cloudnative.scs.processor.geocoding.reverse;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

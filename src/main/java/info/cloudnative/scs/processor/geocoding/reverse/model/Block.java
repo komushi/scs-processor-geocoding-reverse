@@ -1,4 +1,4 @@
-package io.pivotal.spring.cloud.stream.processor.geocoding.model;
+package info.cloudnative.scs.processor.geocoding.reverse.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
