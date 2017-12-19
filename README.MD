@@ -262,3 +262,12 @@ tuple:
   "dropoffDatetime": "2013-01-01 00:04:00"
 }
 ```
+
+-------------
+
+## Test with http source and geocoding processor
+
+```
+java -jar target/scs-source-http-1.0.0-RELEASE.jar --spring.cloud.stream.defaultBinder=rabbit 
+
+java -jar target/scs-processor-geocoding-reverse-1.0.0-RELEASE.jar --spring.cloud.stream.defaultBinder=rabbit --logging.level.info.cloudnative=TRACE --properties.mongo.hostName=localhost

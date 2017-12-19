@@ -44,6 +44,10 @@ public class ReverseGeocodingConfiguration {
 
     @Transformer(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)
     public Tuple transform(Message<?> message) {
+        if (logger.isTraceEnabled()) {
+            logger.trace(String.format("Handling message: %s", message));
+        }
+
         Object payloadObj = message.getPayload();
         String payload = null;
 
@@ -62,9 +66,11 @@ public class ReverseGeocodingConfiguration {
             throw new MessageTransformationException(message, "payload empty");
         }
 
-        String[] tokens = payload.split(delims);
+        if (logger.isTraceEnabled()) {
+            logger.trace(String.format("payload: %s", payload));
+        }
 
-        System.out.println("payload:" + payload);
+        String[] tokens = payload.split(delims);
 
         double pickupLatitude = java.lang.Double.parseDouble(tokens[9]);
         double pickupLongitude = java.lang.Double.parseDouble(tokens[8]);
@@ -133,7 +139,9 @@ public class ReverseGeocodingConfiguration {
             .put("dropoffDistrict", dropoffDistrict)
             .build();
 
-        System.out.println("tuple:" + tuple.toString());
+        if (logger.isTraceEnabled()) {
+            logger.trace(String.format("tuple: %s", tuple.toString()));
+        }
 
         return tuple;
 
