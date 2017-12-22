@@ -1,5 +1,8 @@
 package info.cloudnative.scs.processor.geocoding.reverse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.fasterxml.jackson.databind.deser.Deserializers;
 import com.mongodb.Mongo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,8 @@ import info.cloudnative.scs.processor.geocoding.reverse.model.Block;
 @EnableBinding(Processor.class)
 @EnableConfigurationProperties(MongoProperties.class)
 public class ReverseGeocodingConfiguration {
+
+    private static final Log logger = LogFactory.getLog(ReverseGeocodingConfiguration.class);
 
     private static final String delims = "[,]";
 
