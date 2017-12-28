@@ -125,7 +125,7 @@ docker run komushi/scs-processor-geocoding-reverse --spring.cloud.stream.default
 
 ### 4-2. Deploy on AWS
 ```
-docker run komushi/scs-processor-geocoding-reverse --properties.mongo.hostName=<mongodb-address>
+docker run komushi/scs-processor-geocoding-reverse --spring.cloud.stream.defaultBinder=kinesis --cloud.aws.region.static=us-east-1  --properties.mongo.hostName=<mongodb-address>
 ```
 
 # II. Appendix
