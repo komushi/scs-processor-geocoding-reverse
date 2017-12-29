@@ -11,6 +11,7 @@
 * [MongoDB](http://brewformulas.org/Mongodb)
 * [Kafka](http://brewformulas.org/Kafka) is an alternative for messaging.
 * [scs-source-http](https://github.com/komushi/scs-source-http)
+* [scs-sink-gemfire](https://github.com/komushi/scs-sink-gemfire)
 
 ### 1-1. Start RabbitMQ
 ```
@@ -105,11 +106,13 @@ docker push komushi/scs-processor-geocoding-reverse
 java -jar target/scs-processor-geocoding-reverse-1.0.0.RELEASE.jar --spring.cloud.stream.defaultBinder=<rabbit/kinesis/kafka> --properties.mongo.hostName=<mongodb-address> --logging.level.info.cloudnative=TRACE
 ```
 
-### 3-2. Test with scs-source-http and scs-processor-geocoding-reverse
+### 3-2. Test with scs-source-http and scs-sink-gemfire
 ```
-java -jar target/scs-source-http-1.0.0-RELEASE.jar --spring.cloud.stream.defaultBinder=rabbit 
+java -jar target/scs-source-http-1.0.0-RELEASE.jar
 
-java -jar target/scs-processor-geocoding-reverse-1.0.0-RELEASE.jar --spring.cloud.stream.defaultBinder=rabbit --logging.level.info.cloudnative=TRACE --properties.mongo.hostName=localhost
+java -jar target/scs-processor-geocoding-reverse-1.0.0-RELEASE.jar --logging.level.info.cloudnative=TRACE
+
+java -jar target/scs-sink-gemfire-1.0.0.RELEASE.jar
 
 curl -H "Content-Type: text/plain" -X POST -d'468244D1361B8A3EB8D206CC394BC9E9,BB899DFEA9CC964B50C540A1D685CCFB,2013-01-01 00:00:00,2013-01-01 00:04:00,240,1.71,139.752268,35.677043,139.771699,35.697283,CSH,6.50,0.50,0.50,0.00,0.00,7.50' 'http://localhost:9000'
 ```
@@ -118,9 +121,9 @@ curl -H "Content-Type: text/plain" -X POST -d'468244D1361B8A3EB8D206CC394BC9E9,B
 
 ### 4-1. Local Execution on RabbitMQ
 ```
-docker run -p 9000:9000 komushi/scs-source-http --spring.cloud.stream.defaultBinder=rabbit --spring.rabbitmq.host=docker.for.mac.localhost --spring.rabbitmq.port=5672
+docker run -p 9000:9000 komushi/scs-source-http --spring.rabbitmq.host=docker.for.mac.localhost
 
-docker run komushi/scs-processor-geocoding-reverse --spring.cloud.stream.defaultBinder=rabbit --spring.rabbitmq.host=docker.for.mac.localhost --spring.rabbitmq.port=5672 --logging.level.info.cloudnative=TRACE
+docker run komushi/scs-processor-geocoding-reverse --spring.rabbitmq.host=docker.for.mac.localhost --properties.mongo.hostName=docker.for.mac.localhost --logging.level.info.cloudnative=TRACE
 ```
 
 ### 4-2. Deploy on AWS
