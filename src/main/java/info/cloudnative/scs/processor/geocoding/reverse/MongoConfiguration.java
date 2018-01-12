@@ -13,6 +13,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import com.mongodb.MongoClientOptions;
 
 
 
@@ -42,8 +43,12 @@ public class MongoConfiguration extends AbstractMongoConfiguration {
         MongoCredential credential = MongoCredential.createCredential(properties.getUser(), properties.getDatabase(), properties.getPassword().toCharArray());
         ServerAddress serverAddress = new ServerAddress(properties.getHostName(), properties.getPort());
 
+        MongoClientOptions.Builder optionsBuilder = new MongoClientOptions.Builder();
+        optionsBuilder.maxConnectionIdleTime(60000);
+        MongoClientOptions opts = optionsBuilder.build();
+
         // Mongo Client
-        return new MongoClient(serverAddress, Arrays.asList(credential)); 
+        return new MongoClient(serverAddress, Arrays.asList(credential), opts); 
     }
 
 }

@@ -137,7 +137,7 @@ docker run komushi/scs-processor-geocoding-reverse --spring.cloud.stream.default
 server.port=9100
 spring.cloud.stream.defaultBinder=kinesis
 spring.cloud.stream.bindings.input.destination=http_raw
-spring.cloud.stream.bindings.input.group=transform_geotuple
+spring.cloud.stream.bindings.input.group=geocoding
 spring.cloud.stream.bindings.input.contentType=text/plain
 spring.cloud.stream.bindings.output.destination=transform_geotuple
 spring.cloud.stream.bindings.output.contentType=application/json
